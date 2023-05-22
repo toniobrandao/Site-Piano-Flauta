@@ -43,6 +43,29 @@ let allKeys = [
   ],
   audio = new Audio(`tunes/piano/1.mp3`); // by default, audio src is "a" tune
 let flute_is_on = false;
+// JavaScript code to update the viewport based on device width
+let initialScale;
+let deviceWidth =
+  window.innerWidth ||
+  document.documentElement.clientWidth ||
+  document.body.clientWidth;
+
+console.log(deviceWidth);
+if (deviceWidth < 768) {
+  initialScale = 0.2; // Set initial scale for smaller devices
+} else {
+  initialScale = 0.2; // Set initial scale for larger devices
+}
+
+window.onload = function () {
+  let viewportMeta = document.getElementById("viewport-meta");
+  viewportMeta.setAttribute(
+    "content",
+    "width=device-width, initial-scale=" + initialScale
+  );
+};
+
+//WebSite Code
 
 const playTune = (key) => {
   if (flute_is_on) {
