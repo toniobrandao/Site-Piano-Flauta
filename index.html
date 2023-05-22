@@ -1,128 +1,85 @@
-const pianoKeys = document.querySelectorAll(".piano-keys .key"),
-  volumeSlider = document.querySelector(".volume-slider input"),
-  keysCheckbox = document.querySelector(".keys-checkbox input");
-fluteSoundCheckbox = document.querySelector(".flute-sound-checkbox input");
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - youtube.com/codingnepal -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta
+      charset="utf-8"
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+      id="viewport-meta"
+    />
+    <title>Conversor Piano para a Flauta</title>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div>
+      <h1>Bem Vindo!</h1>
+      <h2>
+        Aqui você encontra o gráfico correspondente da nota musical na flauta
+        transversal.
+      </h2>
+      <div class="wrapper">
+        <header>
+          <div class="column flute-sound-checkbox">
+            <span>Som de Flauta</span><input type="checkbox" unchecked />
+          </div>
+          <div class="column volume-slider">
+            <span>Volume</span
+            ><input type="range" min="0" max="1" value="0.5" step="any" />
+          </div>
+          <div class="column keys-checkbox">
+            <span>Mostrar teclas</span><input type="checkbox" checked />
+          </div>
+        </header>
+        <ul class="piano-keys">
+          <li class="key white" data-key="1"><span>1</span></li>
+          <li class="key black" data-key="q"><span>q</span></li>
+          <li class="key white" data-key="2"><span>2</span></li>
+          <li class="key black" data-key="w"><span>w</span></li>
+          <li class="key white" data-key="3"><span>3</span></li>
+          <li class="key white" data-key="e"><span>e</span></li>
+          <li class="key black" data-key="4"><span>4</span></li>
+          <li class="key white" data-key="r"><span>r</span></li>
+          <li class="key black" data-key="5"><span>5</span></li>
+          <li class="key white" data-key="t"><span>t</span></li>
+          <li class="key black" data-key="6"><span>6</span></li>
+          <li class="key white" data-key="y"><span>y</span></li>
+          <li class="key white" data-key="7"><span>7</span></li>
+          <li class="key black" data-key="u"><span>u</span></li>
+          <li class="key white" data-key="8"><span>8</span></li>
+          <li class="key black" data-key="i"><span>i</span></li>
+          <li class="key white" data-key="9"><span>9</span></li>
+          <li class="key white" data-key="o"><span>o</span></li>
+          <li class="key black" data-key="0"><span>0</span></li>
+          <li class="key white" data-key="p"><span>p</span></li>
+          <li class="key black" data-key="-"><span>-</span></li>
+          <li class="key white" data-key="z"><span>z</span></li>
+          <li class="key black" data-key="s"><span>s</span></li>
+          <li class="key white" data-key="x"><span>x</span></li>
+          <li class="key white" data-key="d"><span>d</span></li>
+          <li class="key black" data-key="c"><span>c</span></li>
+          <li class="key white" data-key="f"><span>f</span></li>
+          <li class="key black" data-key="v"><span>v</span></li>
+          <li class="key white" data-key="g"><span>g</span></li>
+          <li class="key white" data-key="b"><span>b</span></li>
+          <li class="key black" data-key="h"><span>h</span></li>
+          <li class="key white" data-key="n"><span>n</span></li>
+          <li class="key black" data-key="j"><span>j</span></li>
+          <li class="key white" data-key="m"><span>m</span></li>
+          <li class="key black" data-key="k"><span>k</span></li>
+          <li class="key white" data-key=","><span>,</span></li>
+        </ul>
+      </div>
 
-let flute_is_on = false;
+      <div class="image-wrapper">
+        <img id="flute-image" src="flute_chart/1.png" alt="C4 Piano Key" />
+      </div>
+    </div>
+  </body>
 
-let allKeys = [
-    "1",
-    "q",
-    "2",
-    "w",
-    "3",
-    "e",
-    "4",
-    "r",
-    "5",
-    "t",
-    "6",
-    "y",
-    "7",
-    "u",
-    "8",
-    "i",
-    "9",
-    "o",
-    "0",
-    "p",
-    "-",
-    "z",
-    "s",
-    "x",
-    "d",
-    "c",
-    "f",
-    "v",
-    "g",
-    "b",
-    "h",
-    "n",
-    "j",
-    "m",
-    "k",
-    ",",
-  ],
-  audio = new Audio(`tunes/piano/1.mp3`); // by default, audio src is "a" tune
-
-// JavaScript code to update the viewport based on device width
-let initialScale;
-let deviceWidth =
-  window.innerWidth ||
-  document.documentElement.clientWidth ||
-  document.body.clientWidth;
-
-console.log(deviceWidth);
-if (deviceWidth < 768) {
-  initialScale = 0.2; // Set initial scale for smaller devices
-} else {
-  initialScale = 0.2; // Set initial scale for larger devices
-}
-
-window.onload = function () {
-  let viewportMeta = document.getElementById("viewport-meta");
-  viewportMeta.setAttribute(
-    "content",
-    "width=device-width, initial-scale=" + initialScale
-  );
-};
-
-//WebSite Code
-
-const playTune = (key) => {
-  if (flute_is_on) {
-    audio.src = `tunes/flute/${key}.wav`;
-  } else {
-    audio.src = `tunes/piano/${key}.mp3`; // passing audio src based on key pressed
-  }
-
-  audio.play(); // playing audio
-
-  const clickedKey = document.querySelector(`[data-key="${key}"]`); // getting clicked key element
-  clickedKey.classList.add("active"); // adding active class to the clicked key element
-  setTimeout(() => {
-    // removing active class after 150 ms from the clicked key element
-    clickedKey.classList.remove("active");
-  }, 150);
-};
-
-pianoKeys.forEach((key) => {
-  allKeys.push(key.dataset.key); // adding data-key value to the allKeys array
-  // calling playTune function with passing data-key value as an argument
-  key.addEventListener("click", () => {
-    playTune(key.dataset.key);
-    document.getElementById(
-      "flute-image"
-    ).src = `flute_chart/${key.dataset.key}.png`;
-  });
-});
-
-const handleVolume = (e) => {
-  audio.volume = e.target.value; // passing the range slider value as an audio volume
-};
-
-const showHideKeys = () => {
-  // toggling hide class from each key on the checkbox click
-  pianoKeys.forEach((key) => key.classList.toggle("hide"));
-};
-
-const fluteSoundOn = () => {
-  if (flute_is_on) {
-    flute_is_on = false;
-  } else {
-    flute_is_on = true;
-  }
-};
-
-const pressedKey = (e) => {
-  // if the pressed key is in the allKeys array, only call the playTune function
-  if (allKeys.includes(String(e.key))) {
-    playTune(e.key);
-    document.getElementById("flute-image").src = `flute_chart/${e.key}.png`;
-  }
-};
-
-keysCheckbox.addEventListener("click", showHideKeys);
-volumeSlider.addEventListener("input", handleVolume);
-document.addEventListener("keydown", pressedKey);
-fluteSoundCheckbox.addEventListener("click", fluteSoundOn);
+  <footer>
+    <p>&copy; 2023 Antônio Brandão.</p>
+  </footer>
+</html>
