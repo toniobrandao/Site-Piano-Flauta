@@ -3,6 +3,8 @@ const pianoKeys = document.querySelectorAll(".piano-keys .key"),
   keysCheckbox = document.querySelector(".keys-checkbox input");
 fluteSoundCheckbox = document.querySelector(".flute-sound-checkbox input");
 
+let flute_is_on = false;
+
 let allKeys = [
     "1",
     "q",
@@ -42,7 +44,7 @@ let allKeys = [
     ",",
   ],
   audio = new Audio(`tunes/piano/1.mp3`); // by default, audio src is "a" tune
-let flute_is_on = false;
+
 // JavaScript code to update the viewport based on device width
 let initialScale;
 let deviceWidth =
